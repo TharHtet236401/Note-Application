@@ -59,11 +59,8 @@
 }
 
 .note-actions {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    display: flex;
+    gap: 0.5rem;
 }
 
 .note-card:hover .note-actions {
@@ -85,6 +82,25 @@
 .edit-btn:hover {
     background-color: var(--primary-color);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.delete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--bg-color);
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+    background-color: #fee2e2;
+    color: #ef4444;
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
 }
@@ -298,6 +314,27 @@
     margin-top: 2rem;
     padding-top: 1rem;
     border-top: 1px solid var(--border-color);
+}
+
+.modal-delete-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    background-color: #ef4444;
+}
+
+.modal-delete-btn:hover {
+    background-color: #dc2626;
+}
+
+.modal-delete-btn svg {
+    transition: transform 0.2s ease;
+}
+
+.modal-delete-btn:hover svg {
+    transform: translateY(-1px);
 }
 
 /* Make note cards clickable */

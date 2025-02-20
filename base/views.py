@@ -59,3 +59,12 @@ def create_note(request):
         return render(request, 'base/create-form.html', context)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+
+
+def delete_note(request, pk):
+    try:
+        note = Note.objects.get(id=pk)
+        note.delete()
+        return redirect('home')
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
