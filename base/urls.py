@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('edit-note/<str:pk>/', views.edit_note, name='edit-note'),
 
 ]
         
