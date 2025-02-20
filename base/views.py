@@ -12,7 +12,7 @@ from utils.statusCodes import (
     HTTP_500_INTERNAL_SERVER_ERROR
 )
 
-# Create your views here.
+# Home View
 def home(request):
     try:
         notes = Note.objects.all()
@@ -24,6 +24,7 @@ def home(request):
             status=HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+# Edit Note View
 def edit_note(request, pk):
     try:    
         note = Note.objects.get(id=pk)
@@ -46,6 +47,7 @@ def edit_note(request, pk):
             status=HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+# Get Note Detail View
 def get_note_detail(request, pk):
     try:
         note = Note.objects.get(id=pk)
@@ -68,6 +70,7 @@ def get_note_detail(request, pk):
             status=HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+# Create Note View
 def create_note(request):
     try:
         if request.method == 'POST':
@@ -88,6 +91,7 @@ def create_note(request):
             status=HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+# Delete Note View
 def delete_note(request, pk):
     try:
         note = Note.objects.get(id=pk)
