@@ -7,22 +7,27 @@ from django.core.serializers.json import DjangoJSONEncoder
 from datetime import datetime
 # Create your views here.
 def home(request):
-    notes = Note.objects.all()
-    context = {'notes': notes}
-    return render(request, 'base/home.html', context)
+    try:
+        notes = Note.objects.all()
+        context = {'notes': notes}
+        return render(request, 'base/home.html', context)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
 
 
 def edit_note(request, pk):
-    note = Note.objects.get(id=pk)
-    print(note)
-    form = NoteForm(instance=note)
-    if request.method == 'POST':
-        form = NoteForm(request.POST, instance=note)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    context = {'form': form}
-    return render(request, 'base/edit-form.html', context)
+    try:    
+        note = Note.objects.get(id=pk)
+        form = NoteForm(instance=note)
+        if request.method == 'POST':
+            form = NoteForm(request.POST, instance=note)
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+        context = {'form': form}
+        return render(request, 'base/edit-form.html', context)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
 
 def get_note_detail(request, pk):
     try:
@@ -38,3 +43,19 @@ def get_note_detail(request, pk):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
+def create_note(request):
+    try:
+        if request.method == 'POST':
+            form = NoteForm(request.POST)
+            if form.is_valid():
+                note = form.save(commit=False)
+                note.author = request.user  # Add the current user as author
+                note.save()
+                return redirect('home')
+        else:  # GET request
+            form = NoteForm()
+        
+        context = {'form': form}
+        return render(request, 'base/create-form.html', context)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
