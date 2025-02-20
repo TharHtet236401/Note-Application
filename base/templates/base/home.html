@@ -8,8 +8,8 @@
 
 <div class="notes-grid">
     {% for note in notes %}
-    <div class="note-card">
-        <div class="note-actions">
+    <div class="note-card" onclick="openModal('{{ note.id }}')">
+        <div class="note-actions" onclick="event.stopPropagation()">
             <a href="{% url 'edit-note' note.id %}" class="edit-btn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -36,4 +36,48 @@
     </div>
     {% endfor %}
 </div>
+
+<!-- Modal -->
+<div id="noteModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle"></h2>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="modalContent"></div>
+            <div class="modal-meta">
+                <div id="modalAuthor" class="author-info"></div>
+                <div id="modalDate" class="update-info"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('noteModal');
+    const closeBtn = document.querySelector('.close-modal');
+
+    function openModal(noteId) {
+        fetch(`/note/${noteId}/`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('modalTitle').textContent = data.title;
+                document.getElementById('modalContent').textContent = data.content;
+                document.getElementById('modalAuthor').textContent = `By ${data.author}`;
+                document.getElementById('modalDate').textContent = `Last updated: ${data.updated_at}`;
+                modal.style.display = 'flex';
+            });
+    }
+
+    closeBtn.onclick = function() {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
 {% endblock %}
