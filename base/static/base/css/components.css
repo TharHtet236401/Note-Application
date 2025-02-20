@@ -245,15 +245,31 @@
     font-weight: 600;
 }
 
-.close-modal {
-    font-size: 1.5rem;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: color 0.2s ease;
+.modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.close-modal:hover {
-    color: var(--text-primary);
+.modal-edit-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.modal-edit-btn svg {
+    transition: transform 0.2s ease;
+}
+
+.modal-edit-btn:hover svg {
+    transform: translateY(-1px);
+}
+
+.close-modal {
+    padding: 0.5rem;
+    line-height: 0.5;
 }
 
 .modal-body {
