@@ -81,10 +81,30 @@
     </div>
 </div>
 
+<!-- Add this after your existing modal -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content delete-modal">
+        <div class="modal-header">
+            <h2>Delete Note</h2>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this note? This action cannot be undone.</p>
+            <div class="form-actions">
+                <button id="cancelDelete" class="btn btn-secondary">Cancel</button>
+                <button id="confirmDelete" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     const modal = document.getElementById('noteModal');
     const closeBtn = document.querySelector('.close-modal');
     const editBtn = document.getElementById('modalEditBtn');
+    const deleteModal = document.getElementById('deleteModal');
+    const cancelDelete = document.getElementById('cancelDelete');
+    const confirmDelete = document.getElementById('confirmDelete');
+    let noteToDelete = null;
 
     function openModal(noteId) {
         fetch(`/note/${noteId}/`)
@@ -101,8 +121,20 @@
     }
 
     function deleteNote(noteId) {
-        if (confirm('Are you sure you want to delete this note?')) {
-            window.location.href = `/delete-note/${noteId}/`;
+        noteToDelete = noteId;
+        deleteModal.style.display = 'flex';
+        // If deleting from main modal, hide it
+        modal.style.display = 'none';
+    }
+
+    cancelDelete.onclick = function() {
+        deleteModal.style.display = 'none';
+        noteToDelete = null;
+    }
+
+    confirmDelete.onclick = function() {
+        if (noteToDelete) {
+            window.location.href = `/delete-note/${noteToDelete}/`;
         }
     }
 
@@ -113,6 +145,10 @@
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = 'none';
+        }
+        if (event.target == deleteModal) {
+            deleteModal.style.display = 'none';
+            noteToDelete = null;
         }
     }
 </script>

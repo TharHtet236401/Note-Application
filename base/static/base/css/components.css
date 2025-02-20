@@ -350,4 +350,38 @@
 /* Prevent modal from closing when clicking content */
 .modal-content {
     cursor: default;
+}
+
+.delete-modal {
+    max-width: 400px !important;
+}
+
+.delete-modal .modal-body {
+    text-align: center;
+}
+
+.delete-modal .modal-header {
+    justify-content: center;
+    color: #ef4444;
+}
+
+.delete-modal .form-actions {
+    margin-top: 2rem;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.delete-modal p {
+    color: var(--text-secondary);
+    margin: 1rem 0;
+}
+
+/* Make delete modal more compact */
+.delete-modal .modal-header {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.delete-modal .btn {
+    min-width: 100px;
 } 
